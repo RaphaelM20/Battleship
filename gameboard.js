@@ -1,6 +1,7 @@
 export default function Gameboard() {
   const shipPositions = new Map();
-  const missedPositions = new Map();
+  const missedPositions = new Set();
+  const hitPositions = new Set();
   const placedShips = [];
 
   function placeShip(ship, coord, direction) {
@@ -25,9 +26,13 @@ export default function Gameboard() {
 
     if (ship) {
       ship.hit();
+      hitPositions.add(key);
+      console.log("hit called on ship: ", key);
+      return "hit";
     }
     else {
-      missedPositions.set(key, true);
+      missedPositions.add(key);
+      return "miss";
     }
   }
 
@@ -44,6 +49,9 @@ export default function Gameboard() {
     receiveAttack,
     getMissedAttacks,
     allShipsSunk,
-    shipPositions
+    shipPositions,
+    missedPositions,
+    hitPositions,
+    placedShips
   };
 };

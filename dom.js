@@ -14,6 +14,24 @@ export function renderBoard(board, container, isEnemy) {
         cell.classList.add("ship");
       }
 
+      const wasHit = board.hitPositions.has(key);
+      const wasMissed = board.missedPositions.has(key);
+
+      if (wasHit) {
+        cell.classList.add("hit");
+      }
+      else if (wasMissed) {
+        cell.classList.add("miss");
+      }
+
+      if (board.hitPositions.has(wasHit)) {
+        return;
+      }
+
+      else if (board.missedPositions.has(wasMissed)) {
+        return;
+      }
+
       container.appendChild(cell);
     }
   }

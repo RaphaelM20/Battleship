@@ -10,11 +10,7 @@ export default function Ship(length) {
   }
 
   function isSunk() {
-    if (hits >= length) {
-      return true;
-    } else {
-      return false;
-    }
+    return hits >= length;
   }
   return {
     length,

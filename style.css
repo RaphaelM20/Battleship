@@ -16,6 +16,14 @@
 .ship {
     width: 30px;
     height: 30px;
-    background-color: red;
+    background-color: purple;
     border: 1px solid black;
+}
+
+.hit {
+    background-color: red;
+}
+
+.miss {
+    background-color: white;
 }
