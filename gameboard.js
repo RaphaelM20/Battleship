@@ -5,19 +5,36 @@ export default function Gameboard() {
   const placedShips = [];
 
   function placeShip(ship, coord, direction) {
+    const [row, col] = coord;
+
     if (direction === "horizontal") {
+      const keyValues = [];
       for (let i = 0; i < ship.length; i++) {
-        const key = `${coord[0]},${coord[1] + i}`;
-        shipPositions.set(key, ship)
+        const key = `${row},${col + i}`;
+
+        if (col + i > 9 || shipPositions.has(key)) {
+          return false;
+        }
+        keyValues.push(key);
       }
-    }
-    else if (direction === "vertical") {
+      keyValues.forEach((key) => {
+        shipPositions.set(key, ship);
+      });
+    } else if (direction === "vertical") {
+      const keyValues = []
       for (let i = 0; i < ship.length; i++) {
-        const key = `${coord[0] + i},${coord[1]}`;
-        shipPositions.set(key, ship)
+        const key = `${row + i},${col}`;
+        if (row + i > 9 || shipPositions.has(key)) {
+          return false;
+        }
+        keyValues.push(key);
       }
+      keyValues.forEach(key => {
+        shipPositions.set(key, ship);
+      })
     }
     placedShips.push(ship);
+    return true;
   }
 
   function receiveAttack(coord) {
@@ -29,8 +46,7 @@ export default function Gameboard() {
       hitPositions.add(key);
       console.log("hit called on ship: ", key);
       return "hit";
-    }
-    else {
+    } else {
       missedPositions.add(key);
       return "miss";
     }
@@ -41,9 +57,24 @@ export default function Gameboard() {
   }
 
   function allShipsSunk() {
-    return placedShips.every(ship => ship.isSunk());
+    return placedShips.every((ship) => ship.isSunk());
   }
 
+  function placeShipsRandomly(shipsArray) {
+    for (const ship of shipsArray) {
+      let placed = false;
+
+      while (!placed) {
+        const direction = Math.random() < 0.5 ? "horizontal" : "vertical";
+        const row = Math.floor(Math.random() * 10);
+        const col = Math.floor(Math.random() * 10);
+        const coord = [row, col];
+
+        placed = placeShip(ship, coord, direction);
+      }
+    }
+  }
+  
   return {
     placeShip,
     receiveAttack,
@@ -52,6 +83,7 @@ export default function Gameboard() {
     shipPositions,
     missedPositions,
     hitPositions,
-    placedShips
+    placedShips,
+    placeShipsRandomly,
   };
-};
+}
