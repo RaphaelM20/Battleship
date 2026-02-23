@@ -1,29 +1,446 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Courier New', monospace;
+    background: linear-gradient(135deg, #0a1929 0%, #1e3c72 50%, #2a5298 100%);
+    color: #fff;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* Animated water effect background */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        repeating-linear-gradient(
+            90deg,
+            transparent,
+            transparent 50px,
+            rgba(255, 255, 255, 0.03) 50px,
+            rgba(255, 255, 255, 0.03) 100px
+        );
+    animation: waves 20s linear infinite;
+    pointer-events: none;
+    z-index: 0;
+}
+
+@keyframes waves {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(100px); }
+}
+
+/* ==================== WELCOME SCREEN ==================== */
+#welcome-screen {
+    text-align: center;
+    z-index: 10;
+    animation: fadeIn 1s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+#welcome-screen h1 {
+    font-size: 5rem;
+    text-transform: uppercase;
+    letter-spacing: 8px;
+    margin-bottom: 20px;
+    text-shadow: 
+        0 0 10px rgba(255, 215, 0, 0.8),
+        0 0 20px rgba(255, 215, 0, 0.6),
+        0 0 30px rgba(255, 215, 0, 0.4),
+        3px 3px 8px rgba(0, 0, 0, 0.8);
+    color: #ffd700;
+    animation: glow 2s ease-in-out infinite alternate;
+    border: none;
+    padding: 0;
+}
+
+@keyframes glow {
+    from { text-shadow: 
+        0 0 10px rgba(255, 215, 0, 0.8),
+        0 0 20px rgba(255, 215, 0, 0.6),
+        0 0 30px rgba(255, 215, 0, 0.4),
+        3px 3px 8px rgba(0, 0, 0, 0.8);
+    }
+    to { text-shadow: 
+        0 0 20px rgba(255, 215, 0, 1),
+        0 0 30px rgba(255, 215, 0, 0.8),
+        0 0 40px rgba(255, 215, 0, 0.6),
+        3px 3px 8px rgba(0, 0, 0, 0.8);
+    }
+}
+
+#name-entry {
+    background: rgba(0, 0, 0, 0.6);
+    padding: 40px 60px;
+    border-radius: 15px;
+    border: 3px solid #ffd700;
+    box-shadow: 
+        0 0 30px rgba(255, 215, 0, 0.3),
+        inset 0 0 20px rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(10px);
+}
+
+#name-entry label {
+    display: block;
+    font-size: 1.3rem;
+    margin-bottom: 20px;
+    color: #ffd700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+#player-name {
+    width: 100%;
+    padding: 15px 20px;
+    font-size: 1.2rem;
+    border: 2px solid #4a90e2;
+    border-radius: 8px;
+    background: rgba(30, 60, 114, 0.8);
+    color: #fff;
+    text-align: center;
+    font-family: 'Courier New', monospace;
+    letter-spacing: 2px;
+    margin-bottom: 25px;
+    transition: all 0.3s ease;
+}
+
+#player-name:focus {
+    outline: none;
+    border-color: #ffd700;
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+    background: rgba(30, 60, 114, 1);
+}
+
+#player-name::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+#start-game-btn {
+    width: 100%;
+    padding: 18px 40px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+    color: #1e3c72;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 6px 20px rgba(255, 215, 0, 0.4);
+    font-family: 'Courier New', monospace;
+}
+
+#start-game-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(255, 215, 0, 0.6);
+    background: linear-gradient(135deg, #ffed4e 0%, #ffd700 100%);
+}
+
+#start-game-btn:active {
+    transform: translateY(0);
+}
+
+/* ==================== GAME CONTAINER ==================== */
+#game-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    z-index: 10;
+    animation: fadeIn 0.5s ease-in;
+}
+
+#player-instructions {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #ffd700;
+    text-align: center;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+    padding: 15px 30px;
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 8px;
+    border: 2px solid #ffd700;
+    width: 1068px;
+    margin-left: auto;  /* ADD THIS */
+    margin-right: auto; /* ADD THIS */
+}
+
+#change-direction-btn {
+    background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
+    color: #fff;
+    padding: 12px 24px;
+    border: 2px solid #ffd700;
+    border-radius: 5px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    transition: all 0.3s ease;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    font-family: 'Courier New', monospace;
+    /* CENTER IT */
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#change-direction-btn:hover {
+    background: linear-gradient(135deg, #357abd 0%, #4a90e2 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(255, 215, 0, 0.4);
+}
+
+#change-direction-btn:active {
+    transform: translateY(0);
+}
+
+#boards {
+    display: flex;
+    gap: 60px;
+    margin-bottom: 30px;
+    justify-content: center;
+}
+
+#player-section,
+#computer-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
 .board {
     display: grid;
-    grid-template-columns: repeat(10, 30px);
-    grid-template-rows: repeat(10, 30px);
+    grid-template-columns: repeat(10, 45px);
+    grid-template-rows: repeat(10, 45px);
     gap: 2px;
-    margin: 20px;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 
+        0 8px 16px rgba(0, 0, 0, 0.6),
+        0 0 30px rgba(255, 215, 0, 0.2);
+    position: relative;
+    border: 3px solid rgba(255, 215, 0, 0.3);
+}
+
+.board::before {
+    content: 'YOUR FLEET';
+    position: absolute;
+    top: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 1rem;
+    font-weight: bold;
+    color: #ffd700;
+    letter-spacing: 3px;
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.8);
+    padding: 5px 15px;
+    background: rgba(0, 0, 0, 0.6);
+    border-radius: 5px;
+    border: 2px solid #ffd700;
+}
+
+#computer-board::before {
+    content: 'ENEMY WATERS';
 }
 
 .cell {
-    width: 30px;
-    height: 30px;
-    background-color: lightblue;
-    border: 1px solid black;
+    width: 45px;
+    height: 45px;
+    background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    cursor: crosshair;
+    transition: all 0.2s ease;
+    position: relative;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.cell:hover {
+    transform: scale(1.08);
+    border-color: #ffd700;
+    box-shadow: 
+        0 0 15px rgba(255, 215, 0, 0.6),
+        inset 0 0 10px rgba(0, 0, 0, 0.2);
+    z-index: 10;
+}
+
+.cell.preview {
+    background: linear-gradient(135deg, #90ee90 0%, #32cd32 100%);
+    border: 2px solid #00ff00;
+    box-shadow: 0 0 15px rgba(0, 255, 0, 0.5);
+}
+
+.cell.preview-invalid {
+    background: linear-gradient(135deg, #ff6b6b 0%, #d32f2f 100%);
+    border: 2px solid #ff0000;
+    box-shadow: 0 0 15px rgba(255, 0, 0, 0.5);
 }
 
 .ship {
-    width: 30px;
-    height: 30px;
-    background-color: purple;
-    border: 1px solid black;
+    background: linear-gradient(135deg, #505050 0%, #303030 100%);
+    border: 2px solid #707070;
+    box-shadow: 
+        inset 0 0 10px rgba(0, 0, 0, 0.5),
+        0 0 8px rgba(112, 112, 112, 0.5);
+}
+
+.ship::before {
+    content: '⚓';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 20px;
+    color: #888;
 }
 
 .hit {
-    background-color: red;
+    background: linear-gradient(135deg, #d32f2f 0%, #b71c1c 100%);
+    border: 2px solid #ff5252;
+    animation: hitAnimation 0.5s ease;
+}
+
+@keyframes hitAnimation {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); background: #ff0000; }
+    100% { transform: scale(1); }
+}
+
+.hit::after {
+    content: '💥';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 28px;
 }
 
 .miss {
-    background-color: white;
+    background: linear-gradient(135deg, #e0e0e0 0%, #b0b0b0 100%);
+    border: 1px solid #888;
+}
+
+.miss::after {
+    content: '○';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 24px;
+    color: #666;
+    font-weight: bold;
+}
+
+#restart-btn {
+    margin: 20px 0;
+    text-align: center;
+}
+
+#restart-btn button {
+    background: linear-gradient(135deg, #ff6b6b 0%, #d32f2f 100%);
+    color: white;
+    padding: 16px 40px;
+    border: 2px solid #ff5252;
+    border-radius: 8px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    transition: all 0.3s ease;
+    box-shadow: 0 6px 15px rgba(211, 47, 47, 0.4);
+    font-family: 'Courier New', monospace;
+}
+
+#restart-btn button:hover {
+    background: linear-gradient(135deg, #d32f2f 0%, #ff6b6b 100%);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(211, 47, 47, 0.6);
+}
+
+#restart-btn button:active {
+    transform: translateY(0);
+}
+
+#game-status {
+    font-size: 2.5rem;
+    font-weight: bold;
+    text-align: center;
+    margin: 20px 0;
+    min-height: 50px;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    color: #ffd700;
+    text-shadow: 
+        0 0 10px rgba(255, 215, 0, 0.8),
+        2px 2px 8px rgba(0, 0, 0, 0.8);
+    animation: statusGlow 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes statusGlow {
+    from { 
+        text-shadow: 
+            0 0 10px rgba(255, 215, 0, 0.8),
+            2px 2px 8px rgba(0, 0, 0, 0.8);
+    }
+    to { 
+        text-shadow: 
+            0 0 20px rgba(255, 215, 0, 1),
+            0 0 30px rgba(255, 215, 0, 0.6),
+            2px 2px 8px rgba(0, 0, 0, 0.8);
+    }
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    #welcome-screen h1 {
+        font-size: 3rem;
+    }
+    
+    #boards {
+        flex-direction: column;
+        gap: 40px;
+    }
+    
+    .board {
+        grid-template-columns: repeat(10, 38px);
+        grid-template-rows: repeat(10, 38px);
+    }
+    
+    .cell {
+        width: 38px;
+        height: 38px;
+    }
+    
+    #player-instructions {
+        font-size: 1.2rem;
+        width: 100%;
+    }
 }

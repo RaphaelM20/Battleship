@@ -1,30 +1,38 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Battleship</title>
-    <link rel="stylesheet" href="style.css"> 
-</head>
-<body>
-    <h1>Battleship</h1>
-
-    <div id="boards">
-        <div id="player-board" class="board"></div>
-        <div id="computer-board" class="board"></div>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div id="welcome-screen">
+      <h1>Battleship ⚓</h1>
+      <div id="name-entry">
+        <label for="player-name">Entry Your Name, Captain:</label>
+        <input type="text" id="player-name" placeholder="Captain's Name" />
+        <button id="start-game-btn">START GAME</button>
+      </div>
     </div>
 
-    <div id="carrier"></div>
-    <div id="battleship"></div>
-    <div id="cruiser"></div>
-    <div id="submarine"></div>
-    <div id="destroyer"></div>
-
-    <div id="restart-btn">
+    <div id="game-container" style="display: none">
+      <div id="player-instructions"></div>
+      <button id="change-direction-btn"></button>
+      <div id="boards">
+        <div id="player-section">
+          <div id="player-board" class="board"></div>
+        </div>
+        <div id="computer-section">
+          <div id="computer-board" class="board"></div>
+        </div>
+      </div>
+      <div id="restart-btn">
         <button>Restart Game</button>
+      </div>
+      <div id="game-status"></div>
     </div>
-    <div id="game-status"></div>
 
     <script type="module" src="script.js"></script>
-</body>
+  </body>
 </html>

@@ -7,11 +7,10 @@ export default function Gameboard() {
   function placeShip(ship, coord, direction) {
     const [row, col] = coord;
 
-    if (direction === "horizontal") {
+    if (direction === "X") {
       const keyValues = [];
       for (let i = 0; i < ship.length; i++) {
         const key = `${row},${col + i}`;
-
         if (col + i > 9 || shipPositions.has(key)) {
           return false;
         }
@@ -20,8 +19,8 @@ export default function Gameboard() {
       keyValues.forEach((key) => {
         shipPositions.set(key, ship);
       });
-    } else if (direction === "vertical") {
-      const keyValues = []
+    } else if (direction === "Y") {
+      const keyValues = [];
       for (let i = 0; i < ship.length; i++) {
         const key = `${row + i},${col}`;
         if (row + i > 9 || shipPositions.has(key)) {
@@ -29,9 +28,9 @@ export default function Gameboard() {
         }
         keyValues.push(key);
       }
-      keyValues.forEach(key => {
+      keyValues.forEach((key) => {
         shipPositions.set(key, ship);
-      })
+      });
     }
     placedShips.push(ship);
     return true;
@@ -65,7 +64,7 @@ export default function Gameboard() {
       let placed = false;
 
       while (!placed) {
-        const direction = Math.random() < 0.5 ? "horizontal" : "vertical";
+        const direction = Math.random() < 0.5 ? "X" : "Y";
         const row = Math.floor(Math.random() * 10);
         const col = Math.floor(Math.random() * 10);
         const coord = [row, col];
@@ -74,7 +73,7 @@ export default function Gameboard() {
       }
     }
   }
-  
+
   return {
     placeShip,
     receiveAttack,

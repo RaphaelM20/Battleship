@@ -1,4 +1,4 @@
-export function Ship(name, length) {
+function Ship(name, length) {
   let hits = 0;
 
   function hit() {
