@@ -43,6 +43,9 @@ export default function Gameboard() {
     if (ship) {
       ship.hit();
       hitPositions.add(key);
+      if (ship.isSunk()) {
+        return "sunk";
+      }
       console.log("hit called on ship: ", key);
       return "hit";
     } else {

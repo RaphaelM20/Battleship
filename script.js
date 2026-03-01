@@ -162,7 +162,7 @@ computerBoardContainer.addEventListener("click", (e) => {
     gameOver = true;
   }
 
-  computer.randomAttack(player1.board);
+  computer.computerTurn(player1.board);
   renderBoard(player1.board, playerBoardContainer, false);
   if (player1.board.allShipsSunk()) {
     gameStatus.textContent = "Computer Wins!";
